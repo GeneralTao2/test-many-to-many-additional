@@ -1,5 +1,10 @@
 package dev;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -15,61 +20,28 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "USERS_GROUPS")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class UserGroup {
-    private long id;
-    private User user;
-    private Group group;
-
-    // additional fields
-    private boolean activated;
-    private Date registeredDate;
-
     @Id
     @GeneratedValue
     @Column(name = "USER_GROUP_ID")
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    private long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "USER_ID")
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+    private User user;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "GROUP_ID")
-    public Group getGroup() {
-        return group;
-    }
+    private Group group;
 
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public boolean isActivated() {
-        return activated;
-    }
-
-    public void setActivated(boolean activated) {
-        this.activated = activated;
-    }
+    private boolean activated;
 
     @Column(name = "REGISTERED_DATE")
     @Temporal(TemporalType.DATE)
-    public Date getRegisteredDate() {
-        return registeredDate;
-    }
+    private Date registeredDate;
 
-    public void setRegisteredDate(Date registeredDate) {
-        this.registeredDate = registeredDate;
-    }
 }

@@ -15,8 +15,8 @@ public class Db {
             UserGroupRepository userGroupRepository
     ) {
         return args -> {
-            User user = new User("tommy", "ymmot", "tommy@gmail.com");
-            Group group = new Group("Coders");
+            User user = new User(0,"tommy", "ymmot", "tommy@gmail.com",null);
+            Group group = new Group(0, "Coders", null);
 
             groupRepository.save(group);
             userRepository.save(user);
