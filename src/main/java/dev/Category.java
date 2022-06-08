@@ -1,43 +1,90 @@
 package dev;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
-
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "category", catalog = "mkyongdb")
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 public class Category implements java.io.Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_generator")
-    @Column(name = "CATEGORY_ID", unique = true, nullable = false)
-    private Integer id;
-
+    private Integer categoryId;
     private String name;
-
-    @Column(name = "[DESC]")
     private String desc;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.category")
     private Set<StockCategory> stockCategories = new HashSet<StockCategory>(0);
 
+    public Category() {
+    }
+
+    public Category(String name, String desc) {
+        this.name = name;
+        this.desc = desc;
+    }
+
+    public Category(String name, String desc, Set<StockCategory> stockCategories) {
+        this.name = name;
+        this.desc = desc;
+        this.stockCategories = stockCategories;
+    }
+
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "CATEGORY_ID", unique = true, nullable = false)
+    public Integer getCategoryId() {
+        return this.categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    @Column(name = "NAME", nullable = false, length = 10)
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column(name = "[DESC]", nullable = false)
+    public String getDesc() {
+        return this.desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.category")
+    public Set<StockCategory> getStockCategories() {
+        return this.stockCategories;
+    }
+
+    public void setStockCategories(Set<StockCategory> stockCategories) {
+        this.stockCategories = stockCategories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return categoryId.equals(category.categoryId) && Objects.equals(name, category.name) && Objects.equals(desc, category.desc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(categoryId);
+    }
 }

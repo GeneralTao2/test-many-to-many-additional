@@ -23,10 +23,10 @@ public class Db {
             stockRepository.save(stock);
             stock = stockRepository.getStockByStockCode(stockCode).get();
 
-            Category category1 = new Category(1,"CONSUMER1", "CONSUMER COMPANY1", null);
+            Category category1 = new Category("CONSUMER1", "CONSUMER COMPANY1");
             categoryRepository.save(category1);
 
-            Category category2 = new Category(2,"CONSUMER2", "CONSUMER COMPANY2", null);
+            Category category2 = new Category("CONSUMER2", "CONSUMER COMPANY2");
             categoryRepository.save(category2);
 
             StockCategory stockCategory1 = new StockCategory();
@@ -44,9 +44,10 @@ public class Db {
             stock.getStockCategories().add(stockCategory1);
             stock.getStockCategories().add(stockCategory2);
 
-            stockRepository.save(stock);
-            /*stock.getStockCategories().remove(stockCategory1);
-            stockRepository.save(stock);*/
+            stockRepository.saveAndFlush(stock);
+            stock.getStockCategories().remove(stockCategory1);
+            //stockCategoryRepository.delete(stockCategory1);
+            //stockRepository.saveAndFlush(stock);
         };
     }
 }

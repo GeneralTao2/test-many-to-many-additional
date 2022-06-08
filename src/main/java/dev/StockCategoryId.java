@@ -1,23 +1,44 @@
 package dev;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-@Getter
-@Setter
 public class StockCategoryId implements java.io.Serializable {
 
-    @ManyToOne
     private Stock stock;
+    private Category category;
 
     @ManyToOne
-    private Category category;
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    @ManyToOne
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StockCategoryId that = (StockCategoryId) o;
+
+        if (stock != null ? !stock.equals(that.stock) : that.stock != null) return false;
+        if (category != null ? !category.equals(that.category) : that.category != null)
+            return false;
+
+        return true;
+    }
 
     public int hashCode() {
         int result;

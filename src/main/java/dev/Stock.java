@@ -1,11 +1,7 @@
 package dev;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,30 +10,85 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
-
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+@Table(name = "stock", catalog = "mkyongdb", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "STOCK_NAME"),
+        @UniqueConstraint(columnNames = "STOCK_CODE") })
 public class Stock implements java.io.Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_generator")
-    @Column(name = "STOCK_ID", unique = true, nullable = false)
-    private Integer id;
-
+    private Integer stockId;
     private String stockCode;
-
     private String stockName;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.stock", cascade=CascadeType.ALL)
     private Set<StockCategory> stockCategories = new HashSet<StockCategory>(0);
 
+    public Stock() {
+    }
+
+    public Stock(String stockCode, String stockName) {
+        this.stockCode = stockCode;
+        this.stockName = stockName;
+    }
+
+    public Stock(String stockCode, String stockName,
+                 Set<StockCategory> stockCategories) {
+        this.stockCode = stockCode;
+        this.stockName = stockName;
+        this.stockCategories = stockCategories;
+    }
+
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "STOCK_ID", unique = true, nullable = false)
+    public Integer getStockId() {
+        return this.stockId;
+    }
+
+    public void setStockId(Integer stockId) {
+        this.stockId = stockId;
+    }
+
+    @Column(name = "STOCK_CODE", unique = true, nullable = false, length = 10)
+    public String getStockCode() {
+        return this.stockCode;
+    }
+
+    public void setStockCode(String stockCode) {
+        this.stockCode = stockCode;
+    }
+
+    @Column(name = "STOCK_NAME", unique = true, nullable = false, length = 20)
+    public String getStockName() {
+        return this.stockName;
+    }
+
+    public void setStockName(String stockName) {
+        this.stockName = stockName;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.stock", cascade=CascadeType.ALL)
+    public Set<StockCategory> getStockCategories() {
+        return this.stockCategories;
+    }
+
+    public void setStockCategories(Set<StockCategory> stockCategories) {
+        this.stockCategories = stockCategories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Stock stock = (Stock) o;
+        return stockId.equals(stock.stockId) && Objects.equals(stockCode, stock.stockCode) && Objects.equals(stockName, stock.stockName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stockId);
+    }
 }
