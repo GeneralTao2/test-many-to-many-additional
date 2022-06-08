@@ -31,5 +31,5 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user")
-    private Set<UserGroup> userGroups = new HashSet<UserGroup>();
+    private Set<UserGroup> userGroups;
 }

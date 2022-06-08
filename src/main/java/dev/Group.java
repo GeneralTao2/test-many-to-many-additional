@@ -29,6 +29,6 @@ public class Group {
     private String name;
 
     @OneToMany(mappedBy = "group")
-    private Set<UserGroup> userGroups = new HashSet<UserGroup>();
+    private Set<UserGroup> userGroups;
 
 }

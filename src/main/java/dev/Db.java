@@ -18,7 +18,6 @@ public class Db {
             User user = new User(0,"tommy", "ymmot", "tommy@gmail.com",null);
             Group group = new Group(0, "Coders", null);
 
-            groupRepository.save(group);
             userRepository.save(user);
 
             UserGroup userGroup = new UserGroup();
@@ -28,9 +27,11 @@ public class Db {
             userGroup.setActivated(true);
             userGroup.setRegisteredDate(new Date());
 
+            group.getUserGroups().add(userGroup);
+            groupRepository.save(group);
 
 
-            userGroupRepository.save(userGroup);
+            //userGroupRepository.save(userGroup);
         };
     }
 }

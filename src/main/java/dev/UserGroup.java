@@ -19,7 +19,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "USERS_GROUPS")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -27,7 +26,6 @@ import javax.persistence.TemporalType;
 public class UserGroup {
     @Id
     @GeneratedValue
-    @Column(name = "USER_GROUP_ID")
     private long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
@@ -40,7 +38,6 @@ public class UserGroup {
 
     private boolean activated;
 
-    @Column(name = "REGISTERED_DATE")
     @Temporal(TemporalType.DATE)
     private Date registeredDate;
 
