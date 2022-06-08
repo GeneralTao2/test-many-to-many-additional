@@ -2,5 +2,5 @@ package dev;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GroupRepository extends JpaRepository<Group, Long> {
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 }

@@ -10,27 +10,43 @@ import java.util.Date;
 public class Db {
     @Bean
     CommandLineRunner initDB(
-            UserRepository userRepository,
-            GroupRepository groupRepository,
-            UserGroupRepository userGroupRepository
+            CategoryRepository categoryRepository,
+            StockRepository stockRepository,
+            StockCategoryRepository stockCategoryRepository
     ) {
         return args -> {
-            User user = new User(0,"tommy", "ymmot", "tommy@gmail.com",null);
-            Group group = new Group(0, "Coders", null);
+            Stock stock = new Stock();
+            String stockCode = "7052";
+            stock.setStockCode(stockCode);
+            stock.setStockName("PADINI");
 
-            groupRepository.save(group);
-            userRepository.save(user);
+            stockRepository.save(stock);
+            stock = stockRepository.getStockByStockCode(stockCode).get();
 
-            UserGroup userGroup = new UserGroup();
+            Category category1 = new Category(1,"CONSUMER1", "CONSUMER COMPANY1", null);
+            categoryRepository.save(category1);
 
-            userGroup.setGroup(group);
-            userGroup.setUser(user);
-            userGroup.setActivated(true);
-            userGroup.setRegisteredDate(new Date());
+            Category category2 = new Category(2,"CONSUMER2", "CONSUMER COMPANY2", null);
+            categoryRepository.save(category2);
 
+            StockCategory stockCategory1 = new StockCategory();
+            stockCategory1.setStock(stock);
+            stockCategory1.setCategory(category1);
+            stockCategory1.setCreatedDate(new Date()); //extra column
+            stockCategory1.setCreatedBy("system"); //extra column
 
+            StockCategory stockCategory2 = new StockCategory();
+            stockCategory2.setStock(stock);
+            stockCategory2.setCategory(category2);
+            stockCategory2.setCreatedDate(new Date()); //extra column
+            stockCategory2.setCreatedBy("system"); //extra column
 
-            userGroupRepository.save(userGroup);
+            stock.getStockCategories().add(stockCategory1);
+            stock.getStockCategories().add(stockCategory2);
+
+            stockRepository.save(stock);
+            /*stock.getStockCategories().remove(stockCategory1);
+            stockRepository.save(stock);*/
         };
     }
 }
