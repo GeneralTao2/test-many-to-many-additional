@@ -6,10 +6,11 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class StockCategoryId implements java.io.Serializable {
 
+    @ManyToOne
     private Stock stock;
+    @ManyToOne
     private Category category;
 
-    @ManyToOne
     public Stock getStock() {
         return stock;
     }
@@ -18,7 +19,6 @@ public class StockCategoryId implements java.io.Serializable {
         this.stock = stock;
     }
 
-    @ManyToOne
     public Category getCategory() {
         return category;
     }

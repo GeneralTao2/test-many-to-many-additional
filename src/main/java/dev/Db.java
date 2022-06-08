@@ -44,10 +44,10 @@ public class Db {
             stock.getStockCategories().add(stockCategory1);
             stock.getStockCategories().add(stockCategory2);
 
-            stockRepository.saveAndFlush(stock);
-            stock.getStockCategories().remove(stockCategory1);
+            stockRepository.save(stock);
+            //stock.getStockCategories().remove(stockCategory1);
             //stockCategoryRepository.delete(stockCategory1);
-            //stockRepository.saveAndFlush(stock);
+            stockRepository.save(stock);
         };
     }
 }

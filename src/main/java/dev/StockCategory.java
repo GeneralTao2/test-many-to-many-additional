@@ -1,4 +1,8 @@
 package dev;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 
 import javax.persistence.AssociationOverride;
@@ -19,23 +23,19 @@ import javax.persistence.Transient;
                 joinColumns = @JoinColumn(name = "STOCK_ID")),
         @AssociationOverride(name = "pk.category",
                 joinColumns = @JoinColumn(name = "CATEGORY_ID")) })
+@Getter
+@Setter
+@NoArgsConstructor
 public class StockCategory implements java.io.Serializable {
 
+    @EmbeddedId
     private StockCategoryId pk = new StockCategoryId();
+    @Temporal(TemporalType.DATE)
+    @Column(name = "CREATED_DATE", nullable = false, length = 10)
     private Date createdDate;
+    @Column(name = "CREATED_BY", nullable = false, length = 10)
     private String createdBy;
 
-    public StockCategory() {
-    }
-
-    @EmbeddedId
-    public StockCategoryId getPk() {
-        return pk;
-    }
-
-    public void setPk(StockCategoryId pk) {
-        this.pk = pk;
-    }
 
     @Transient
     public Stock getStock() {
@@ -55,24 +55,6 @@ public class StockCategory implements java.io.Serializable {
         getPk().setCategory(category);
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "CREATED_DATE", nullable = false, length = 10)
-    public Date getCreatedDate() {
-        return this.createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    @Column(name = "CREATED_BY", nullable = false, length = 10)
-    public String getCreatedBy() {
-        return this.createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
 
     public boolean equals(Object o) {
         if (this == o)
