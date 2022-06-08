@@ -2,6 +2,7 @@ package dev;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Date;
 
@@ -26,6 +27,7 @@ import javax.persistence.Transient;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class StockCategory implements java.io.Serializable {
 
     @EmbeddedId

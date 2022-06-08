@@ -1,14 +1,15 @@
 package dev;
 
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 @Embeddable
 public class StockCategoryId implements java.io.Serializable {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Stock stock;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
 
     public Stock getStock() {

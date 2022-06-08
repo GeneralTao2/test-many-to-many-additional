@@ -29,13 +29,14 @@ import javax.persistence.UniqueConstraint;
 public class Stock implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "STOCK_ID", unique = true, nullable = false)
+    @Column(name = "STOCK_ID")
     private Integer stockId;
-    @Column(name = "STOCK_CODE", unique = true, nullable = false, length = 10)
+    @Column(name = "STOCK_CODE")
     private String stockCode;
-    @Column(name = "STOCK_NAME", unique = true, nullable = false, length = 20)
+    @Column(name = "STOCK_NAME")
     private String stockName;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.stock", cascade=CascadeType.ALL, orphanRemoval = false)
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.stock", cascade=CascadeType.ALL)
     private Set<StockCategory> stockCategories = new HashSet<StockCategory>(0);
 
 

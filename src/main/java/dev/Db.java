@@ -29,25 +29,48 @@ public class Db {
             Category category2 = new Category("CONSUMER2", "CONSUMER COMPANY2");
             categoryRepository.save(category2);
 
+            Category category3 = new Category("CONSUMER2", "CONSUMER COMPANY2");
+            categoryRepository.save(category3);
+
             StockCategory stockCategory1 = new StockCategory();
             stockCategory1.setStock(stock);
             stockCategory1.setCategory(category1);
-            stockCategory1.setCreatedDate(new Date()); //extra column
-            stockCategory1.setCreatedBy("system"); //extra column
+            stockCategory1.setCreatedDate(new Date());
+            stockCategory1.setCreatedBy("system");
 
             StockCategory stockCategory2 = new StockCategory();
             stockCategory2.setStock(stock);
             stockCategory2.setCategory(category2);
-            stockCategory2.setCreatedDate(new Date()); //extra column
-            stockCategory2.setCreatedBy("system"); //extra column
+            stockCategory2.setCreatedDate(new Date());
+            stockCategory2.setCreatedBy("system");
 
-            stock.getStockCategories().add(stockCategory1);
-            stock.getStockCategories().add(stockCategory2);
+            StockCategory stockCategory3 = new StockCategory();
+            stockCategory3.setStock(stock);
+            stockCategory3.setCategory(category3);
+            stockCategory3.setCreatedDate(new Date());
+            stockCategory3.setCreatedBy("system");
 
-            stockRepository.save(stock);
+            // can add trough stockCategoryRepository
+            stockCategoryRepository.save(stockCategory1);
+            stockCategoryRepository.save(stockCategory2);
+            stockCategoryRepository.save(stockCategory3);
+
+            // can delete trough stockCategoryRepository
+            stockCategoryRepository.delete(stockCategory1);
+
+            // can show trough stockRepository
+            Stock stock1 = stockRepository.getStockByStockCode(stockCode).get();
+            System.out.println(stock1.getStockCategories());
+
+
+            // can add trough stockRepository but questionable
+            //stock.getStockCategories().add(stockCategory1);
+            //stock.getStockCategories().add(stockCategory2);
+            //stockRepository.save(stock);
+
+            // cannot delete stockRepository - problem, but we have stockCategoryRepository
             //stock.getStockCategories().remove(stockCategory1);
-            //stockCategoryRepository.delete(stockCategory1);
-            stockRepository.save(stock);
+            //stockRepository.save(stock);
         };
     }
 }
